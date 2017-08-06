@@ -50,7 +50,7 @@ void		firstGuess	()
   printf("Guesser: \"Is there a %d?\"\n",binaryPlace);
   sleep(1);
   //  Tell the answering (parent) process our guess is '1'
-  kill(getpid(),ONE_SIG);
+  kill(getppid(),ONE_SIG);
 }
 
 
@@ -63,7 +63,7 @@ void		secondGuess	()
   printf("Guesser: \"Whoops, I guess there is no %d.\"\n",binaryPlace);
   sleep(1);
   //  Tell the answering (parent) process our guess is '0'
-  kill(getpid(),ZERO_SIG);
+  kill(getppid(),ZERO_SIG);
 }
 
 
@@ -122,22 +122,22 @@ int		main		()
 
   //Installing correctSigHandler
   action.sa_handler	= correctSigHandler;
-  sigaction(correctSigHandler,&action,NULL);
+  sigaction(CORRECT_SIG,&action,NULL);
 
   //Installing incorrectSigHandler
   action.sa_handler	= incorrectSigHandler;
-  sigaction(incorrectSigHandler,&action,NULL);
+  sigaction(INCORRECT_SIG,&action,NULL);
 
   //Installing sigIntHandler
   action.sa_handler	= sigIntHandler;
-  sigaction(sigIntHandler,&action,NULL);
+  sigaction(SIGINT,&action,NULL);
 
   firstGuess();
-  printf("ran first guess...");
+  //printf("ran first guess...");
 
   while  (shouldContinue && (binaryPlace > 0)){
     sleep(1);
-    printf("slept in guess loop");
+    //printf("slept in guess loop");
   }
   return(EXIT_SUCCESS);
 }

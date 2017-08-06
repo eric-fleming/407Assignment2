@@ -62,7 +62,7 @@ void		sigChildHandler	(int	sig
 int		main		()
 {
   //  I.  Application validity check:
-  printf("Yo I LAUNCHED\n");
+  //printf("Yo I LAUNCHED\n");
   //  II.  Do program:
   pid_t			childId;
 
@@ -73,11 +73,11 @@ int		main		()
 
   //Installing
   action.sa_handler = sigChildHandler;
-  sigaction(sigChildHandler,&action,NULL);
+  sigaction(SIGCHLD,&action,NULL);
 
   childId = fork();
   if(childId == 0){
-	  printf("I FORKED and about to execl ANSWERER\n");
+	  //printf("I FORKED and about to execl ANSWERER\n");
 	  execl(ANSWERER_PROG,ANSWERER_PROG,NULL);
   }
   else{
@@ -95,8 +95,8 @@ int		main		()
 	  {
 		  printf("Timer: \"%d seconds\"\n",secs);
 		  //  Stop the child process by sending it SIGINT
-		  printf("sent SIGINT\n");
-		  kill(childId,2);
+		  //printf("sent SIGINT\n");
+		  kill(childId,SIGINT);
 	  }
 
 	  while  ( !didChildStop )

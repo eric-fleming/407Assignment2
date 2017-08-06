@@ -103,7 +103,7 @@ void		sigIntHandler	(int	sig
   printf("Answerer: \"Whoops, time is up!\"\n");
   shouldContinue	= 0;
   //  Tell the guessing process that the time is up by sending it SIGINT
-  kill(guesserId,2);
+  kill(guesserId,SIGINT);
 }
 
 
@@ -124,22 +124,22 @@ int		main		()
 
   //Installing oneSigHandler
   action.sa_handler = oneSigHandler;
-  sigaction(oneSigHandler,&action,NULL);
+  sigaction(ONE_SIG,&action,NULL);
 
   //Installing zeroSigHandler
   action.sa_handler = zeroSigHandler;
-  sigaction(zeroSigHandler,&action,NULL);
+  sigaction(ZERO_SIG,&action,NULL);
 
   //Installing sigIntHandler
   action.sa_handler = sigIntHandler;
-  sigaction(sigIntHandler,&action,NULL);
+  sigaction(SIGINT,&action,NULL);
 
   //  Start guessing process, put process id in 'guesserId'
   guesserId = fork();
   if(guesserId == 0){
-	  printf("I FORKED and about to execute GUESSER\n");
+	  //printf("I FORKED and about to execute GUESSER\n");
 	  execl(GUESSER_PROG,GUESSER_PROG,NULL);
-	  printf("execl guesser done??");
+	  //printf("execl guesser done??");
   }
   else{
 	  printf("Reached parent of Answerer...");
