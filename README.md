@@ -2,9 +2,9 @@
 
 Current Output of the program.
 
-[eflemin8@cdmlinux assignment2]$ ./launcherTimer 
-Yo I LAUNCHED
-Timer: "13 seconds"
++  [eflemin8@cdmlinux assignment2]$ ./launcherTimer 
++  Yo I LAUNCHED
++  Timer: "13 seconds"
 I FORKED and about to execl ANSWERER
 Answerer: "(Don't tell, but the answer is 77)"
 I FORKED and about to execute GUESSER
