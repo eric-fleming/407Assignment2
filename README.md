@@ -25,4 +25,6 @@ I FORKED and about to execute GUESSER
 +  sent SIGINT
 +  ^C
 
-but didn't really send SIGINT i have to quit it...
+## Thoughts
++  I realized I never created sig actions in launcherTimer() and I suppose there should have been because there is a sighandler dangling there left unused.  That's gotta fix something. 
++  Also, are my kill() statements making sense in general in both files now?
