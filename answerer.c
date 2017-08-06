@@ -57,7 +57,7 @@ void		correctGuess	(int	digit
 
   binaryPlace = binaryPlace >> 1;
   //  Tell the guessing process that it guessed correctly
-  kill(GUESSER_PROG,CORRECT_SIG);
+  kill(guesserId,CORRECT_SIG);
 }
 
 
@@ -67,7 +67,7 @@ void		incorrectGuess	(int	digit
 {
   printf("Answerer: \"Sorry, guess again.\"\n");
   //  Tell the guessing process that it guessed incorrectly
-  kill(GUESSER_PROG,INCORRECT_SIG);
+  kill(guesserId,INCORRECT_SIG);
 }
 
 
@@ -103,7 +103,7 @@ void		sigIntHandler	(int	sig
   printf("Answerer: \"Whoops, time is up!\"\n");
   shouldContinue	= 0;
   //  Tell the guessing process that the time is up by sending it SIGINT
-  kill(GUESSER_PROG,SIGINT);
+  kill(guesserId,SIGINT);
 }
 
 
@@ -135,10 +135,8 @@ int		main		()
   sigaction(sigIntHandler,&action,NULL);
 
   //  Start guessing process, put process id in 'guesserId'
-  pid_t guesserID;
-
-  guesserID = fork();
-  if(guesserID ==0){
+  guesserId = fork();
+  if(guesserId == 0){
 	  printf("I FORKED and about to execute GUESSER\n");
 	  execl(GUESSER_PROG,GUESSER_PROG,NULL);
   }

@@ -42,7 +42,7 @@ void		sigChildHandler	(int	sig
 				)
 {
   //  wait for the child so it does not stay a zombie process
-
+  waitpid(-1,NULL,0);
   if  (isTimeUp)
     printf("Timer: \"Sorry, time is up!\"\n");
   else
