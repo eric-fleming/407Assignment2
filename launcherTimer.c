@@ -43,11 +43,12 @@ void		sigChildHandler	(int	sig
 {
   //  wait for the child so it does not stay a zombie process
   waitpid(-1,NULL,0);
-  if  (isTimeUp)
-    printf("Timer: \"Sorry, time is up!\"\n");
-  else
-    printf("Timer: \"Congratulations!\"\n");
-
+  if  (isTimeUp){
+	  printf("Timer: \"Sorry, time is up!\"\n");
+  }
+  else{
+	  printf("Timer: \"Congratulations!\"\n");
+  }
   didChildStop	   = 1;
 }
 
@@ -67,29 +68,29 @@ int		main		()
 	  printf("I FORKED and about to execute ANSWERER\n");
 	  execl(ANSWERER_PROG,ANSWERER_PROG,NULL);
   }
+  else{
+	  int secs;
 
-  //End of my do something.
-  int secs;
+	  for  (secs = TIME_LIMIT_NUM_SECONDS;  (secs > 0) && !didChildStop;  secs--)
+	  {
+		  printf("Timer: \"%d seconds\"\n",secs);
+		  sleep(1);
+	  }
 
-  for  (secs = TIME_LIMIT_NUM_SECONDS;  (secs > 0) && !didChildStop;  secs--)
-  {
-    printf("Timer: \"%d seconds\"\n",secs);
-    sleep(1);
-  }
+	  isTimeUp	= 1;
 
-  isTimeUp	= 1;
+	  if  (!didChildStop)
+	  {
+		  printf("Timer: \"%d seconds\"\n",secs);
+		  //  Stop the child process by sending it SIGINT
+		  kill(childId,2);//SIGINT code
+		  printf("sent SIGINT\n");
+	  }
 
-  if  (!didChildStop)
-  {
-    printf("Timer: \"%d seconds\"\n",secs);
-    //  Stop the child process by sending it SIGINT
-	kill(childId,2);//SIGINT code
-	printf("sent SIGINT\n");
-  }
-
-  while  ( !didChildStop )
-  {
-    sleep(1);
+	  while  ( !didChildStop )
+	  {
+		  sleep(1);
+	  }
   }
   return(EXIT_SUCCESS);
 }

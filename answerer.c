@@ -140,11 +140,11 @@ int		main		()
 	  printf("I FORKED and about to execute GUESSER\n");
 	  execl(GUESSER_PROG,GUESSER_PROG,NULL);
   }
+  else{
+	  while  (shouldContinue && (binaryPlace > 0))
+	  sleep(1);
 
-  while  (shouldContinue && (binaryPlace > 0))
-    sleep(1);
-
-  // Wait for guessing process here
-
+	  // Wait for guessing process here
+  }
   return(EXIT_SUCCESS);
 }

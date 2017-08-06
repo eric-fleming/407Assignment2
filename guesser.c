@@ -50,7 +50,7 @@ void		firstGuess	()
   printf("Guesser: \"Is there a %d?\"\n",binaryPlace);
   sleep(1);
   //  Tell the answering (parent) process our guess is '1'
-  kill(ANSWERER_PROG,ONE_SIG);
+  kill(getppid(),ONE_SIG);
 }
 
 
@@ -63,7 +63,7 @@ void		secondGuess	()
   printf("Guesser: \"Whoops, I guess there is no %d.\"\n",binaryPlace);
   sleep(1);
   //  Tell the answering (parent) process our guess is '0'
-  kill(ANSWERER_PROG,ZERO_SIG);
+  kill(getppid(),ZERO_SIG);
 }
 
 
