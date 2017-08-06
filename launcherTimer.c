@@ -42,14 +42,18 @@ void		sigChildHandler	(int	sig
 				)
 {
   //  wait for the child so it does not stay a zombie process
-  waitpid(-1,NULL,0);
-  if  (isTimeUp){
-	  printf("Timer: \"Sorry, time is up!\"\n");
+  pid_t pid;
+  int	status;
+
+  while(pid=wait(&status) > 0){
+	  if  (isTimeUp){
+		printf("Timer: \"Sorry, time is up!\"\n");
+	  }
+	  else{
+		printf("Timer: \"Congratulations!\"\n");
+	  }
+	  didChildStop	   = 1;
   }
-  else{
-	  printf("Timer: \"Congratulations!\"\n");
-  }
-  didChildStop	   = 1;
 }
 
 
@@ -63,6 +67,14 @@ int		main		()
   pid_t			childId;
 
   //  Do something here
+
+  struct sigaction action;
+  memset(&action,'\0',sizeof(action));
+
+  //Installing
+  action.sa_handler = sigChildHandler;
+  sigaction(sigChildHandler,&action,NULL);
+
   childId = fork();
   if(childId == 0){
 	  printf("I FORKED and about to execl ANSWERER\n");

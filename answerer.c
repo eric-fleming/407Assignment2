@@ -130,7 +130,7 @@ int		main		()
   action.sa_handler = zeroSigHandler;
   sigaction(zeroSigHandler,&action,NULL);
 
-  //Installing
+  //Installing sigIntHandler
   action.sa_handler = sigIntHandler;
   sigaction(sigIntHandler,&action,NULL);
 
