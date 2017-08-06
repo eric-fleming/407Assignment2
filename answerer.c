@@ -103,7 +103,7 @@ void		sigIntHandler	(int	sig
   printf("Answerer: \"Whoops, time is up!\"\n");
   shouldContinue	= 0;
   //  Tell the guessing process that the time is up by sending it SIGINT
-  kill(guesserId,SIGINT);
+  kill(guesserId,2);
 }
 
 
@@ -139,11 +139,13 @@ int		main		()
   if(guesserId == 0){
 	  printf("I FORKED and about to execute GUESSER\n");
 	  execl(GUESSER_PROG,GUESSER_PROG,NULL);
+	  printf("execl guesser done??");
   }
   else{
-	  while  (shouldContinue && (binaryPlace > 0))
-	  sleep(1);
-
+	  printf("Reached parent of Answerer...");
+	  while  (shouldContinue && (binaryPlace > 0)){
+		  sleep(1);
+	  }
 	  // Wait for guessing process here
   }
   return(EXIT_SUCCESS);

@@ -64,8 +64,8 @@ int		main		()
 
   //  Do something here
   childId = fork();
-  if(childId ==0){
-	  printf("I FORKED and about to execute ANSWERER\n");
+  if(childId == 0){
+	  printf("I FORKED and about to execl ANSWERER\n");
 	  execl(ANSWERER_PROG,ANSWERER_PROG,NULL);
   }
   else{
@@ -83,8 +83,8 @@ int		main		()
 	  {
 		  printf("Timer: \"%d seconds\"\n",secs);
 		  //  Stop the child process by sending it SIGINT
-		  kill(childId,2);//SIGINT code
 		  printf("sent SIGINT\n");
+		  kill(childId,2);
 	  }
 
 	  while  ( !didChildStop )
